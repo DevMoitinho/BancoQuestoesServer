@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Response DTO for a discipline.
+ */
 @Data
 @Builder
 @NoArgsConstructor

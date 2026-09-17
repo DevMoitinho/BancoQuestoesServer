@@ -12,12 +12,22 @@ import com.DevMoitinho.bancoQuestoes.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementation of UserDetailsService to load user data from the database for Spring Security.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UsuarioRepository repo;
 
+    /**
+     * Loads a user by their username.
+     *
+     * @param username The username of the user to load.
+     * @return The loaded UserDetails.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     @Override
     public UserDetails loadUserByUsername(String username){
         Optional<Usuario> userOptional = repo.findByUsername(username);

@@ -16,6 +16,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a question in the question bank system.
+ */
 @Entity
 @Data
 @Builder
@@ -23,16 +26,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Questao {
 
+    /**
+     * Unique identifier of the question.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable=false)
+    /**
+     * The text of the question.
+     */
+    @Column(nullable=false, columnDefinition="TEXT")
     private String enunciado;
 
+    /**
+     * List of possible answer alternatives.
+     */
     @OneToMany(mappedBy="questao", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Alternativa> alternativas;
 
+    /**
+     * The discipline this question is categorized under.
+     */
     @ManyToOne
     @JoinColumn(name = "disciplina_id")
     private Disciplina disciplina;

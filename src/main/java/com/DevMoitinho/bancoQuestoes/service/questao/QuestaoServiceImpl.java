@@ -22,6 +22,9 @@ import com.DevMoitinho.bancoQuestoes.repository.QuestaoRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementation of the QuestaoService providing business logic for managing questions and generating exams.
+ */
 @Service
 @RequiredArgsConstructor
 public class QuestaoServiceImpl implements QuestaoService {

@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Request DTO for creating or updating a discipline.
+ */
 @Data
 @Builder
 @NoArgsConstructor

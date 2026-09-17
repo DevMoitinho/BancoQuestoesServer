@@ -10,16 +10,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Response DTO for a question.
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestaoResponseDTO{
+public class QuestaoResponseDTO {
+
+    @JsonProperty("id")
+    private Long id;
 
     @JsonProperty("enunciado")
     private String enunciado;
 
     @JsonProperty("alternativas")
-    private List<AlternativaResponseDTO> alternativas;  
+    private List<AlternativaResponseDTO> alternativas;
 
 }

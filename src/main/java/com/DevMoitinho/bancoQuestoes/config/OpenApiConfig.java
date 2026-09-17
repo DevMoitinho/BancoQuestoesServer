@@ -8,6 +8,9 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
+/**
+ * Configuration for OpenAPI (Swagger) to document the API and enable JWT authentication in the UI.
+ */
 @Configuration
 public class OpenApiConfig {
 
