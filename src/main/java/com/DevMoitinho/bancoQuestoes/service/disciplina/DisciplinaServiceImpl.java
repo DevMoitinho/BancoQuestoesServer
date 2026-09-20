@@ -15,6 +15,9 @@ import com.DevMoitinho.bancoQuestoes.repository.DisciplinaRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implementation of the DisciplinaService providing business logic for managing disciplines.
+ */
 @Service
 @RequiredArgsConstructor
 public class DisciplinaServiceImpl implements DisciplinaService {

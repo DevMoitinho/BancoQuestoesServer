@@ -16,6 +16,9 @@ import com.DevMoitinho.bancoQuestoes.security.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * REST controller for authentication and token management.
+ */
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -24,6 +27,12 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
+    /**
+     * Authenticates a user and returns a JWT token.
+     *
+     * @param request The login request containing username and password.
+     * @return A response entity containing the JWT token.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
