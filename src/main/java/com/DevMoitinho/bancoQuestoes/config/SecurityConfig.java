@@ -77,28 +77,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        // Libera a URL do seu frontend React (Vite geralmente usa 5173)
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-
-        // Libera os métodos HTTP comuns
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-
-        // Libera todos os cabeçalhos (necessário para enviar o Token JWT no
-        // Authorization)
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control"));
-
-        // Permite que o navegador envie credenciais (cookies, etc) se necessário
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Aplica a todas as rotas
-        return source;
-    }
-
     /**
      * Provides the AuthenticationManager bean.
      *
