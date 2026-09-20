@@ -15,12 +15,21 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+/**
+ * Service for managing JWT tokens, including generation, extraction, and validation.
+ */
 @Service
 public class JwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
 
+    /**
+     * Generates a JWT token for a given username.
+     *
+     * @param username The username to generate the token for.
+     * @return The generated JWT token.
+     */
     public String generateToken(String username){
         JwtBuilder jws = Jwts.builder()
                         .subject(username)
@@ -30,6 +39,12 @@ public class JwtService {
         return jws.compact();
     }
 
+    /**
+     * Extracts the username from a JWT token.
+     *
+     * @param token The JWT token.
+     * @return The extracted username.
+     */
     public String extractUsername(String token){
         return extractClaims(token).getSubject();
     }
@@ -43,6 +58,13 @@ public class JwtService {
 
     }
 
+    /**
+     * Validates a JWT token against a user's details.
+     *
+     * @param token The JWT token.
+     * @param userDetails The user details to validate against.
+     * @return true if the token is valid, false otherwise.
+     */
     public boolean isValidToken(String token, UserDetails userDetails){
         Claims claims = extractClaims(token);
         if(!claims.getSubject().equals(userDetails.getUsername())){
