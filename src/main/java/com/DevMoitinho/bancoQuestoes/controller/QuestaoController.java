@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DevMoitinho.bancoQuestoes.dto.PesquisaPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.service.questao.QuestaoService;
 
@@ -85,5 +86,11 @@ public class QuestaoController{
                                         @PathVariable Long idQuestao){
         return ResponseEntity.status(HttpStatus.OK)
                             .body(questaoService.alterar(questao,idQuestao));
+    }
+    
+    @PostMapping("/pesquisa")
+    public ResponseEntity<?> listarQuestoesPorDisciplina(@RequestBody @Valid PesquisaPutPostRequestDTO questao){
+        return ResponseEntity.status(HttpStatus.OK)
+                            .body(questaoService.pesquisar(questao));
     }
 }

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.DevMoitinho.bancoQuestoes.dto.PesquisaPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoResponseDTO;
 import com.DevMoitinho.bancoQuestoes.exception.disciplina.DisciplinaNotFoundException;
@@ -16,6 +17,7 @@ import com.DevMoitinho.bancoQuestoes.exception.questao.QuestaoNotFoundException;
 import com.DevMoitinho.bancoQuestoes.exception.questao.QuestoesInsuficientesException;
 import com.DevMoitinho.bancoQuestoes.model.Alternativa;
 import com.DevMoitinho.bancoQuestoes.model.Disciplina;
+import com.DevMoitinho.bancoQuestoes.model.Pesquisa;
 import com.DevMoitinho.bancoQuestoes.model.Questao;
 import com.DevMoitinho.bancoQuestoes.repository.DisciplinaRepository;
 import com.DevMoitinho.bancoQuestoes.repository.QuestaoRepository;
@@ -130,6 +132,15 @@ public class QuestaoServiceImpl implements QuestaoService {
                 .map(questao -> modelMapper.map(questao, QuestaoResponseDTO.class))
                 .collect(Collectors.toList());
 
+	}
+
+	@Override
+	public List<QuestaoResponseDTO> pesquisar(PesquisaPutPostRequestDTO questao) {
+        Pesquisa pesquisa = modelMapper.map(questao, Pesquisa.class);
+		List<Questao> questoes = repository.findByEnunciadoContaining(pesquisa.getPesquisa());
+        return questoes.stream()
+                .map(q -> modelMapper.map(q, QuestaoResponseDTO.class))
+                .collect(Collectors.toList());
 	}
 
 }
