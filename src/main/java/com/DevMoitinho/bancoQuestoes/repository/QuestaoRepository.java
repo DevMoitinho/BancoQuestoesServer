@@ -13,4 +13,8 @@ public interface QuestaoRepository extends JpaRepository<Questao, Long>{
     
     public List<Questao> findByDisciplinaId(Long idDisciplina);
 
+    public List<Questao> findByEnunciadoContaining(String pesquisa);
+
+    List<Questao> findByTagsId(Long tagId);
+
 }
