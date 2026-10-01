@@ -35,6 +35,8 @@ public class QuestaoServiceImpl implements QuestaoService {
     private final QuestaoRepository repository;
     private final DisciplinaRepository disciplinaRepository;
 
+    //FUNCOES PARA PESQUISA  
+
     @Override
     public List<QuestaoResponseDTO> listar() {
         List<Questao> questoes = repository.findAll();
@@ -42,7 +44,27 @@ public class QuestaoServiceImpl implements QuestaoService {
                 .map(questao -> modelMapper.map(questao, QuestaoResponseDTO.class))
                 .collect(Collectors.toList());
     }
+    @Override
+	public List<QuestaoResponseDTO> listarPorDisciplina(Long idDisciplina) {
+        List<Questao> questoes = repository.findByDisciplinaId(idDisciplina);
+        return questoes.stream()
+                .map(questao -> modelMapper.map(questao, QuestaoResponseDTO.class))
+                .collect(Collectors.toList());
 
+	}
+    @Override
+	public List<QuestaoResponseDTO> pesquisar(PesquisaPutPostRequestDTO pesquisaDTO) {
+        Pesquisa pesquisa = modelMapper.map(pesquisaDTO, Pesquisa.class);
+		List<Questao> questoes = repository.pesquisar(pesquisa.getPesquisa());
+        return questoes.stream()
+                .map(q -> modelMapper.map(q, QuestaoResponseDTO.class))
+                .collect(Collectors.toList());
+	}
+
+
+
+
+    //FUNCOES PARA CRIAR/ALTERAR/REMOVER
     @Override
     public QuestaoResponseDTO criar(QuestaoPutPostRequestDTO questao) {
         Questao newQ = modelMapper.map(questao, Questao.class);
@@ -95,15 +117,7 @@ public class QuestaoServiceImpl implements QuestaoService {
 
     }
 
-	@Override
-	public List<QuestaoResponseDTO> listarPorDisciplina(Long idDisciplina) {
-        List<Questao> questoes = repository.findByDisciplinaId(idDisciplina);
-        return questoes.stream()
-                .map(questao -> modelMapper.map(questao, QuestaoResponseDTO.class))
-                .collect(Collectors.toList());
-
-	}
-
+	
 	@Override
 	public List<QuestaoResponseDTO> gerarProva(Long idDisciplina, int tamanho) {
         //carrega as questões da disciplina, embaralhadas
@@ -134,13 +148,6 @@ public class QuestaoServiceImpl implements QuestaoService {
 
 	}
 
-	@Override
-	public List<QuestaoResponseDTO> pesquisar(PesquisaPutPostRequestDTO questao) {
-        Pesquisa pesquisa = modelMapper.map(questao, Pesquisa.class);
-		List<Questao> questoes = repository.pesquisar(pesquisa.getPesquisa());
-        return questoes.stream()
-                .map(q -> modelMapper.map(q, QuestaoResponseDTO.class))
-                .collect(Collectors.toList());
-	}
+	
 
 }
