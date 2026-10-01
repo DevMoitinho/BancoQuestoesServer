@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Tag{
 
     /**
-     * Unique identifier of the user.
+     * Unique identifier of the tag.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +36,5 @@ public class Tag{
      */
     @Column(nullable=false, unique=true)
     private String name;
-
-    /**
-     * Reference to questions.
-     */
-    @ManyToMany(mappedBy = "tags")
-    private List<Questao> questoes;
 
 }
