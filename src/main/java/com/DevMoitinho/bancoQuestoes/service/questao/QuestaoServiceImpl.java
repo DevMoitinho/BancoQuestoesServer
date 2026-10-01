@@ -137,7 +137,7 @@ public class QuestaoServiceImpl implements QuestaoService {
 	@Override
 	public List<QuestaoResponseDTO> pesquisar(PesquisaPutPostRequestDTO questao) {
         Pesquisa pesquisa = modelMapper.map(questao, Pesquisa.class);
-		List<Questao> questoes = repository.findByEnunciadoContaining(pesquisa.getPesquisa());
+		List<Questao> questoes = repository.pesquisar(pesquisa.getPesquisa());
         return questoes.stream()
                 .map(q -> modelMapper.map(q, QuestaoResponseDTO.class))
                 .collect(Collectors.toList());
