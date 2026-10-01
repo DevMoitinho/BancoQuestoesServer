@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.DevMoitinho.bancoQuestoes.dto.PesquisaPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoPutPostRequestDTO;
@@ -17,10 +19,10 @@ import com.DevMoitinho.bancoQuestoes.exception.questao.QuestaoNotFoundException;
 import com.DevMoitinho.bancoQuestoes.exception.questao.QuestoesInsuficientesException;
 import com.DevMoitinho.bancoQuestoes.model.Alternativa;
 import com.DevMoitinho.bancoQuestoes.model.Disciplina;
-import com.DevMoitinho.bancoQuestoes.model.Pesquisa;
 import com.DevMoitinho.bancoQuestoes.model.Questao;
 import com.DevMoitinho.bancoQuestoes.repository.DisciplinaRepository;
 import com.DevMoitinho.bancoQuestoes.repository.QuestaoRepository;
+import com.DevMoitinho.bancoQuestoes.repository.QuestaoSpecification;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,24 +40,20 @@ public class QuestaoServiceImpl implements QuestaoService {
     //FUNCOES PARA PESQUISA  
 
     @Override
-    public List<QuestaoResponseDTO> listar() {
-        List<Questao> questoes = repository.findAll();
-        return questoes.stream()
-                .map(questao -> modelMapper.map(questao, QuestaoResponseDTO.class))
-                .collect(Collectors.toList());
-    }
-    @Override
-	public List<QuestaoResponseDTO> listarPorDisciplina(Long idDisciplina) {
-        List<Questao> questoes = repository.findByDisciplinaId(idDisciplina);
-        return questoes.stream()
-                .map(questao -> modelMapper.map(questao, QuestaoResponseDTO.class))
-                .collect(Collectors.toList());
-
-	}
-    @Override
 	public List<QuestaoResponseDTO> pesquisar(PesquisaPutPostRequestDTO pesquisaDTO) {
-        Pesquisa pesquisa = modelMapper.map(pesquisaDTO, Pesquisa.class);
-		List<Questao> questoes = repository.pesquisar(pesquisa.getPesquisa());
+        Specification<Questao> spec = (root, query, cb) -> cb.conjunction();
+
+        if(StringUtils.hasText(pesquisaDTO.getPesquisa())){
+            spec = spec.and(QuestaoSpecification.searchText(pesquisaDTO.getPesquisa()));
+        }
+        if(pesquisaDTO.getDisciplinaId()!=null){
+            spec = spec.and(QuestaoSpecification.hasDisciplina(pesquisaDTO.getDisciplinaId()));
+        }
+        if(pesquisaDTO.getTags()!=null && !pesquisaDTO.getTags().isEmpty()){
+            spec = spec.and(QuestaoSpecification.hasTags(pesquisaDTO.getTags()));
+        }
+
+		List<Questao> questoes = repository.findAll(spec);
         return questoes.stream()
                 .map(q -> modelMapper.map(q, QuestaoResponseDTO.class))
                 .collect(Collectors.toList());
