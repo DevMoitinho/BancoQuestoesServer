@@ -12,23 +12,9 @@ import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoResponseDTO;
  */
 public interface QuestaoService {
 
-    /**
-     * Lists all questions in the system.
-     *
-     * @return A list of all questions.
-     */
-    public List<QuestaoResponseDTO> listar();
 
     /**
-     * Lists questions associated with a specific discipline.
-     *
-     * @param idDisciplina The ID of the discipline to filter by.
-     * @return A list of questions belonging to the specified discipline.
-     */
-    public List<QuestaoResponseDTO> listarPorDisciplina(Long idDisciplina);
-
-    /**
-     * Lists all questions that contains a certain string.
+     * Lists all questions that matches the filters in the DTO.
      *
      * @return A list of all questions.
      */

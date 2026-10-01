@@ -28,27 +28,10 @@ public class QuestaoController{
 
     private final QuestaoService questaoService;
 
-    /**
-     * Retrieves a list of all questions.
-     *
-     * @return A response entity containing the list of questions.
-     */
-    @GetMapping("/list")
-    public ResponseEntity<?> listarQuestoes(){
+    @PostMapping("/pesquisa")
+    public ResponseEntity<?> listarQuestoesPorDisciplina(@RequestBody @Valid PesquisaPutPostRequestDTO questao){
         return ResponseEntity.status(HttpStatus.OK)
-                            .body(questaoService.listar());
-    }
-
-    /**
-     * Retrieves questions for a specific discipline.
-     *
-     * @param idDisciplina The ID of the discipline.
-     * @return A response entity containing the filtered list of questions.
-     */
-    @GetMapping("/list/{idDisciplina}")
-    public ResponseEntity<?> listarQuestoesPorDisciplina(@PathVariable Long idDisciplina){
-        return ResponseEntity.status(HttpStatus.OK)
-                            .body(questaoService.listarPorDisciplina(idDisciplina));
+                            .body(questaoService.pesquisar(questao));
     }
 
     /**
@@ -88,9 +71,4 @@ public class QuestaoController{
                             .body(questaoService.alterar(questao,idQuestao));
     }
     
-    @PostMapping("/pesquisa")
-    public ResponseEntity<?> listarQuestoesPorDisciplina(@RequestBody @Valid PesquisaPutPostRequestDTO questao){
-        return ResponseEntity.status(HttpStatus.OK)
-                            .body(questaoService.pesquisar(questao));
-    }
 }

@@ -3,18 +3,19 @@ package com.DevMoitinho.bancoQuestoes.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
 import com.DevMoitinho.bancoQuestoes.model.Questao;
 
 /**
  * Repository interface for accessing Questao entities.
  */
-public interface QuestaoRepository extends JpaRepository<Questao, Long>{
+public interface QuestaoRepository extends JpaRepository<Questao, Long>, JpaSpecificationExecutor<Questao> {
     
     public List<Questao> findByDisciplinaId(Long idDisciplina);
 
-    public List<Questao> findByEnunciadoContaining(String pesquisa);
-
-    List<Questao> findByTagsId(Long tagId);
+    @Query(value="select * from questao q where q.search_ts @@ to_tsquery('portuguese',?1) order by ts_rank(q.search_ts, to_tsquery('portuguese',?1)) desc", nativeQuery=true)
+    public List<Questao> pesquisar(String pesquisa);
 
 }

@@ -1,9 +1,10 @@
 package com.DevMoitinho.bancoQuestoes.dto;
 
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,10 @@ import lombok.NoArgsConstructor;
 public class PesquisaPutPostRequestDTO {
 
     @JsonProperty("pesquisa")
-    @NotBlank(message = "Pesquisa obrigatorio")
     private String pesquisa;
+    @JsonProperty("disciplina")
+    private Long disciplinaId;
+    @JsonProperty("tags")
+    private List<Long> tags;
 
 }
