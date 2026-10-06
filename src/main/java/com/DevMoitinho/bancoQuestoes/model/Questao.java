@@ -1,6 +1,9 @@
 package com.DevMoitinho.bancoQuestoes.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.Formula;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -36,13 +41,16 @@ public class Questao {
     /**
      * The text of the question.
      */
-    @Column(nullable=false, columnDefinition="TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String enunciado;
+
+    @Formula("search_ts")
+    private String searchTs;
 
     /**
      * List of possible answer alternatives.
      */
-    @OneToMany(mappedBy="questao", cascade=CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "questao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Alternativa> alternativas;
 
     /**
@@ -51,5 +59,12 @@ public class Questao {
     @ManyToOne
     @JoinColumn(name = "disciplina_id")
     private Disciplina disciplina;
+
+    /**
+     * The tags this question is assigned.
+     */
+    @ManyToMany
+    @JoinTable(name = "questao_tag", joinColumns = @JoinColumn(name = "questao_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags = new ArrayList<>();
 
 }
