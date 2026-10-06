@@ -33,4 +33,7 @@ public class QuestaoPutPostRequestDTO {
     @JsonProperty("disciplinaId")
     @NotNull(message = "Disciplina é obrigatória")
     private Long disciplinaId;
+
+    @JsonProperty("tagsIds")
+    private List<Long> tagsIds;
 }
