@@ -21,7 +21,7 @@ public class PesquisaPutPostRequestDTO {
 
     @JsonProperty("pesquisa")
     private String pesquisa;
-    @JsonProperty("disciplina")
+    @JsonProperty("disciplinaId")
     private Long disciplinaId;
     @JsonProperty("tags")
     private List<Long> tags;

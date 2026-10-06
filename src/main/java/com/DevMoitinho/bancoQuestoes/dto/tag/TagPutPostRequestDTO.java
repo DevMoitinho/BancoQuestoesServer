@@ -19,5 +19,5 @@ public class TagPutPostRequestDTO {
 
     @JsonProperty("nome")
     @NotBlank(message = "Nome da tag é obrigatório")
-    private String nome;
+    private String name;
 }
