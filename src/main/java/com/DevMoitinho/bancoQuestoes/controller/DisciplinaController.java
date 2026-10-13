@@ -56,7 +56,7 @@ public class DisciplinaController{
      * @param id The ID of the discipline to delete.
      * @return A response entity containing the deleted discipline.
      */
-    @DeleteMapping("/{idQuestao}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                             .body(disciplinaService.remover(id));

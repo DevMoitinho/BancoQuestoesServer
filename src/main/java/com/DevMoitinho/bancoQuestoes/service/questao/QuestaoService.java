@@ -2,6 +2,7 @@ package com.DevMoitinho.bancoQuestoes.service.questao;
 
 import java.util.List;
 
+import com.DevMoitinho.bancoQuestoes.dto.PesquisaPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoPutPostRequestDTO;
 import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoResponseDTO;
 
@@ -11,20 +12,13 @@ import com.DevMoitinho.bancoQuestoes.dto.questao.QuestaoResponseDTO;
  */
 public interface QuestaoService {
 
+
     /**
-     * Lists all questions in the system.
+     * Lists all questions that matches the filters in the DTO.
      *
      * @return A list of all questions.
      */
-    public List<QuestaoResponseDTO> listar();
-
-    /**
-     * Lists questions associated with a specific discipline.
-     *
-     * @param idDisciplina The ID of the discipline to filter by.
-     * @return A list of questions belonging to the specified discipline.
-     */
-    public List<QuestaoResponseDTO> listarPorDisciplina(Long idDisciplina);
+    public List<QuestaoResponseDTO> pesquisar(PesquisaPutPostRequestDTO pesquisa);
 
     /**
      * Creates a new question.
