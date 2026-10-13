@@ -20,5 +20,5 @@ public class TagResponseDTO{
     private Long id;
 
     @JsonProperty("nome")
-    private String nome;  
+    private String name;  
 }

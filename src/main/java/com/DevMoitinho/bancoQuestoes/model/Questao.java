@@ -1,6 +1,9 @@
 package com.DevMoitinho.bancoQuestoes.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.Formula;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -41,6 +44,9 @@ public class Questao {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String enunciado;
 
+    @Formula("search_ts")
+    private String searchTs;
+
     /**
      * List of possible answer alternatives.
      */
@@ -59,6 +65,6 @@ public class Questao {
      */
     @ManyToMany
     @JoinTable(name = "questao_tag", joinColumns = @JoinColumn(name = "questao_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private List<Tag> tags = new ArrayList<>();
 
 }

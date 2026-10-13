@@ -56,7 +56,7 @@ public class TagController{
      * @param id The ID of the tag to delete.
      * @return A response entity containing the deleted tag.
      */
-    @DeleteMapping("/{idQuestao}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                             .body(tagService.remover(id));
