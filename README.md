@@ -99,7 +99,7 @@ A API usa tokens JWT.
 ```bash
 curl -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username": "admin", "password": "sua_senha"}'
+  -d '{"username": "seu_usuario", "password": "sua_senha"}'
 ```
  
 2. A resposta traz o token:
@@ -114,12 +114,22 @@ Authorization: Bearer <seu_token>
  
 ### Usuário único
  
-O projeto foi pensado para uso individual, com um único usuário, por isso não existe endpoint de cadastro. O usuário `admin` é criado pelo script `data.sql`, que insere o registro na tabela `usuario` com a senha armazenada em hash BCrypt (e não faz nada se o usuário já existir). [PREENCHER: confirmar se o script roda automaticamente na inicialização ou se precisa ser executado manualmente no banco]
+O projeto foi pensado para uso individual, com um único usuário, por isso não existe endpoint de cadastro. Cada pessoa que for rodar o sistema cria o seu próprio usuário diretamente no banco de dados. A tabela `usuario` é criada automaticamente na primeira execução da aplicação, então **inicie o sistema ao menos uma vez antes de inserir o usuário**:
  
-- Usuário padrão: `admin`
-- Senha padrão: [PREENCHER: a senha correspondente ao hash do script]
-> **Importante:** o hash da senha fica público no repositório. Se for publicar a aplicação, troque a senha: gere um novo hash BCrypt e atualize a coluna `password` da tabela `usuario`. Não use uma senha que você usa em outros lugares.
+1. **Gere o hash BCrypt da sua senha.** A senha nunca é guardada em texto puro. Em Linux ou macOS, com o `htpasswd` (pacote `apache2-utils`):
+```bash
+htpasswd -bnBC 10 "" 'sua_senha' | tr -d ':\n'
+```
  
+> No Windows, use o WSL ou outra ferramenta que gere hashes BCrypt. Evite sites de geração de hash na internet: você estaria enviando a sua senha a terceiros.
+ 
+2. **Insira o usuário no PostgreSQL**, com o hash gerado:
+```sql
+INSERT INTO usuario (username, password)
+VALUES ('seu_usuario', '<hash_gerado>');
+```
+ 
+3. Use esse usuário e a senha escolhida em `POST /auth/login`.
 ## Endpoints
  
 A API possui 14 endpoints.
@@ -232,8 +242,8 @@ pom.xml
  
 ## Próximos passos
  
-- testes automatizados
-- geração n provas de uma vezde provas em PDF
+- Testes automatizados,
+- Ggeração de multipplas provas.
 ## Contribuindo
  
 Este é um projeto open source. Sugestões e contribuições são bem-vindas:
@@ -242,7 +252,9 @@ Este é um projeto open source. Sugestões e contribuições são bem-vindas:
 2. Crie uma branch para a sua alteração (`git checkout -b minha-alteracao`)
 3. Faça o commit e envie a branch
 4. Abra um Pull Request
+
  
 ## Autor
  
 João Vitor Moitinho Barbosa · [GitHub](https://github.com/DevMoitinho)
+
