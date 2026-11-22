@@ -123,7 +123,9 @@ public class QuestaoServiceImpl implements QuestaoService {
             questaoExistente.getAlternativas().add(alt);
         });
 
-        questaoExistente.getTags().clear();
+        if(questaoExistente.getTags() != null){
+            questaoExistente.getTags().clear();
+        }
 
         if (questao.getTagsIds() != null) {
             List<Tag> novasTags = tagRepository.findAllById(questao.getTagsIds());
