@@ -1,3 +1,4 @@
+[![CI](https://github.com/DevMoitinho/BancoQuestoesServer/actions/workflows/ci.yml/badge.svg)](https://github.com/DevMoitinho/BancoQuestoesServer/actions/workflows/ci.yml)
 # BancoQuestõesServer
  
 API REST para armazenamento e gestão de questões, pensada para professores que precisam organizar um banco de questões por disciplina e montar provas.
